@@ -1,31 +1,19 @@
-import React 	from 'react'					;
-import { Component , PropTypes} 	from 'react'					;
-import Task 					from './Task.jsx'				;
-import {createContainer}		from 'meteor/react-meteor-data'	;
-import {Tasks} 					from '../api/tasks.js'			; 
+import React 				from 'react'					;
+import { Component} 		from 'react'					;
+import { PropTypes} 		from 'react'					;
+import Task 				from './Task.jsx'				;
+import {createContainer}	from 'meteor/react-meteor-data'	;
+import {Tasks} 				from '../api/tasks.js'			; 
 
 /*=====================================
 		 App component 
 		 represents the whole app
 =====================================*/
-//export 		default 
 class 		App 
 extends 	Component 
 {
-  getTasks() {
-				liste_tasks =[	{ _id: 1, text: 'This is task 1' },
-								{ _id: 2, text: 'This is task 2' },
-								{ _id: 3, text: 'This is task 3' }];
-				return liste_tasks;
-			}
- 
   renderTasks() {
-				taches = this.props.tasks;
-	//			taches = this.getTasks();
-
-	/*			taches =[	{ _id: 1, text: 'This is task 1' },
-								{ _id: 2, text: 'This is task 2' },
-								{ _id: 3, text: 'This is task 3' }];*/
+					taches = this.props.tasks;
 					return taches.map(
 							(task) => (<Task key={task._id} task={task} />)	
 					);
@@ -53,21 +41,11 @@ App.propTypes = {
 /*=====================================
 			Container
 =====================================*/
-/*export default createContainer(
-				() =>  {
-							requete = Tasks.find({});
-							values 	= requete.fetch();
-							json 	= {tasks : values}
-							return json;
-						},
-					App
-		);*/
-export default createContainer(
-			() => {
+local_taches = () => {
 					requete = Tasks.find({});
 					values 	= requete.fetch();
 					json 	= {tasks:values}; 
 					return json;
-					}, 
-				App
-	);
+					} 
+export default 
+createContainer(	local_taches, App	);
